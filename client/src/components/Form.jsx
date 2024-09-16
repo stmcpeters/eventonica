@@ -7,14 +7,14 @@ const MyForm = ({ onSaveEvent, editingEvent, onUpdateEvent }) => {
     const [event, setEvent] = useState(editingEvent || {
         title: "",
         location: "",
-        catergory: "",
+        category: "",
         date: ""
     });
 
     const initialValue = {
         title: '',
         location: '',
-        cateogry: '',
+        category: '',
         date: null
     }
 
