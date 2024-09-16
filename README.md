@@ -55,7 +55,6 @@ Eventonica is an easy-to-use web application allows you to view, add, edit, and 
 - DELETE `/api/events/:eventId`: Deletes an event
 
 ## Stretch Goals/Help Wanted
-- Receives date syntax error when creating a new event
 - Search bar/filter events by category, date, etc
 - Ability to favorite events
 
