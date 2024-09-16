@@ -15,11 +15,11 @@ Eventonica is an easy-to-use web application allows you to view, add, edit, and 
 - Real-time data synchronization between frontend and backend
 
 ## Technologies
-Frontend
+### Frontend
 - React: JavaScript library for building responsive user interfaces
 - React Bootstrap: Styling and layout of the app
-- Fetch API: Makes HTTP requests to the backend
-Backend
+- Fetch API: Makes HTTP requests to the backend <br>
+### Backend
 - Express.js: A Node.js framework for setting up the server and handling HTTP requests
 - Node.js: JavaScript environment used to run the Express server
 - Cors: Middleware to handle Cross-Origin Resource Sharing
@@ -54,7 +54,7 @@ Backend
 - PUT `/api/events/:eventId`: Updates an existing event
 - DELETE `/api/events/:eventId`: Deletes an event
 
-## Strech Goals/Help Wanted
+## Stretch Goals/Help Wanted
 - Receives date syntax error when creating a new event
 - Search bar/filter events by category, date, etc
 - Ability to favorite events
