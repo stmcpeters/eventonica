@@ -63,27 +63,27 @@ app.delete('/api/events/:eventId', async (req, res) => {
     }
 });
 
-// //A put request - Update a student 
-// app.put('/api/students/:studentId', async (req, res) =>{
-//     //console.log(req.params);
-//     //This will be the id that I want to find in the DB - the student to be updated
-//     const studentId = req.params.studentId
-//     const updatedStudent = { id: req.body.id, firstname: req.body.firstname, lastname: req.body.lastname, iscurrent: req.body.is_current}
-//     console.log("In the server from the url - the student id", studentId);
-//     console.log("In the server, from the react - the student to be edited", updatedStudent);
-//     // UPDATE students SET lastname = "something" WHERE id="16";
-//     const query = `UPDATE students SET firstname=$1, lastname=$2, is_current=$3 WHERE id=${studentId} RETURNING *`;
-//     const values = [updatedStudent.firstname, updatedStudent.lastname, updatedStudent.iscurrent];
-//     try {
-//       const updated = await db.query(query, values);
-//       console.log(updated.rows[0]);
-//       res.send(updated.rows[0]);
+//A put request - Update an event 
+app.put('/api/events/:eventId', async (req, res) =>{
+    //console.log(req.params);
+    //This will be the id that I want to find in the DB - the event to be updated
+    const eventId = req.params.eventId
+    const updatedEvent = { title: req.body.title, location: req.body.location, category: req.body.category, date: req.body.date}
+    console.log("In the server from the url - the event id", eventId);
+    console.log("In the server, from the react - the event to be edited", updatedEvent);
+    // UPDATE events SET title = "something" WHERE id="16";
+    const query = `UPDATE events SET title=$1, location=$2, category=$3, date=$4 WHERE id=${eventId} RETURNING *`;
+    const values = [updatedEvent.title, updatedEvent.location, updatedEvent.category, updatedEvent.date];
+    try {
+      const updated = await db.query(query, values);
+      console.log(updated.rows[0]);
+      res.send(updated.rows[0]);
   
-//     }catch(e){
-//       console.log(e);
-//       return res.status(400).json({e})
-//     }
-//   })
+    }catch(e){
+      console.log(e);
+      return res.status(400).json({e})
+    }
+  })
 
 // console.log that your server is up and running
 app.listen(PORT, () => {
