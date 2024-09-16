@@ -8,14 +8,14 @@ const MyForm = ({ onSaveEvent, editingEvent, onUpdateEvent }) => {
         title: "",
         location: "",
         category: "",
-        date: ""
+        date: ''
     });
 
     const initialValue = {
         title: '',
         location: '',
         category: '',
-        date: null
+        date: ''
     }
 
     const reducer = (state, action) => {
