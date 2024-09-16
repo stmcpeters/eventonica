@@ -15,7 +15,7 @@ app.get('/', (req, res) => {
     res.json({ message: 'Hola, from My template ExpressJS with React-Vite' });
 });
 
-// create the get request for students in the endpoint '/api/students'
+// create the get request for all events in the endpoint '/api/events'
 app.get('/api/events', async (req, res) => {
     try {
         const { rows: events } = await db.query('SELECT * FROM events');
@@ -25,7 +25,22 @@ app.get('/api/events', async (req, res) => {
     }
 });
 
-// create the POST request
+// get - search events by ID
+app.get('/api/events/:eventId', async (req, res) => {
+    try{
+      // initalizes id you're searching for
+      const { eventId } = req.params;
+      // query to search for albums matching given id
+      const result = await db.query(`SELECT * FROM events WHERE id = $1`, [eventId]);
+      // return event data as JSON
+      res.json(result.rows[0]);
+    } catch (error) {
+      console.error('Error fetching event: ', error);
+    }
+  })
+
+
+// create the POST request - create new event
 app.post('/api/events', async (req, res) => {
     try {
         const newEvent = {
