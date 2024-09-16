@@ -1,41 +1,31 @@
-import React, { useState, useEffect, useReducer } from 'react'
+import React, { useReducer } from 'react'
 import { Button, Form } from "react-bootstrap"
+
+const initialValue = {
+    title: '',
+    location: '',
+    category: '',
+    date: ''
+}
+
+const reducer = (state, action) => {
+    switch (action.type) {
+        case 'textInput':
+            return {
+                ...state,
+                [action.payload.key]: action.payload.value,
+            }
+        case 'resetForm':
+            return initialValue;
+        default:
+            throw new Error(`Unknown action type: ${action.type}`)
+    }
+}
+
 
 const MyForm = ({ onSaveEvent, editingEvent, onUpdateEvent }) => {
 
-    // This is the original State with initial values 
-    const [event, setEvent] = useState(editingEvent || {
-        title: "",
-        location: "",
-        category: "",
-        date: ''
-    });
-
-    const initialValue = {
-        title: '',
-        location: '',
-        category: '',
-        date: ''
-    }
-
-    const reducer = (state, action) => {
-        switch (action.type) {
-            case 'title':
-                return {...state, title: action.payload};
-            case 'location':
-                return {...state, location: action.payload};
-            case 'category': 
-                return {...state, category: action.payload};
-            case 'date':
-                return {...state, date: action.payload};
-            default:
-                throw new Error(`Unknown action type: ${action.type}`)
-        }
-    }
-
-    const clearForm = () => {
-        setEvent({ title: "", location: "", category: "", date: "" })
-    }
+    const [state, dispatch] = useReducer(reducer, editingEvent || initialValue);
 
     //A function to handle the post request
     const postEvent = (newEvent) => {
@@ -52,7 +42,7 @@ const MyForm = ({ onSaveEvent, editingEvent, onUpdateEvent }) => {
                 //I'm sending data to the List of Events (the parent) for updating the list
                 onSaveEvent(data);
                 //this line just for cleaning the form
-                clearForm();
+                dispatch({ type: 'resetForm' });
             });
     };
 
@@ -69,7 +59,7 @@ const MyForm = ({ onSaveEvent, editingEvent, onUpdateEvent }) => {
             .then((data) => {
                 onUpdateEvent(data);
                 //this line just for cleaning the form
-                clearForm();
+                dispatch({ type: 'resetForm' });
             });
     };
 
@@ -77,14 +67,21 @@ const MyForm = ({ onSaveEvent, editingEvent, onUpdateEvent }) => {
     //A function to handle the submit in both cases - Post and Put request!
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (event.id) {
-            putEvent(event);
+        if (state.id) {
+            putEvent(state);
         } else {
-            postEvent(event);
+            postEvent(state);
         }
     };
 
-    const [state, dispatch] = useReducer(reducer,initialValue);
+    const handleChange = (e, key) => {
+        dispatch({
+            type: 'textInput',
+            payload: { key:key, value: e.target.value}
+        })
+    }
+
+
     return (
         <Form className='form-events' onSubmit={handleSubmit}>
             <Form.Group>
@@ -95,9 +92,7 @@ const MyForm = ({ onSaveEvent, editingEvent, onUpdateEvent }) => {
                     placeholder="Title"
                     required
                     value={state.title}
-                    onChange={(event) => {
-                        dispatch({type: 'title', payload: event.target.value})
-                    }}
+                    onChange={(event) => handleChange(event, 'title')}
                 />
             </Form.Group>
             <Form.Group>
@@ -108,9 +103,7 @@ const MyForm = ({ onSaveEvent, editingEvent, onUpdateEvent }) => {
                     placeholder="Location"
                     required
                     value={state.location}
-                    onChange={(event) => {
-                        dispatch({type: 'location', payload: event.target.value})
-                    }}
+                    onChange={(event) => handleChange(event, 'location')}
                 />
             </Form.Group>
             <Form.Group>
@@ -121,9 +114,7 @@ const MyForm = ({ onSaveEvent, editingEvent, onUpdateEvent }) => {
                     placeholder="Category"
                     required
                     value={state.category}
-                    onChange={(event) => {
-                        dispatch({type: 'category', payload: event.target.value})
-                    }}
+                    onChange={(event) => handleChange(event, 'category')}
                 />
             </Form.Group>
             <Form.Group>
@@ -133,14 +124,12 @@ const MyForm = ({ onSaveEvent, editingEvent, onUpdateEvent }) => {
                     id="add-event-date"
                     required
                     value={state.date}
-                    onChange={(event) => {
-                        dispatch({type: 'date', payload: event.target.value})
-                    }}
+                    onChange={(event) => handleChange(event, 'date')}
                 />
             </Form.Group>
             <Form.Group>
-            <Button type="submit" variant="outline-success">{event.id ? "Edit Event" : "Add Event"}</Button>
-            {event.id ? <Button type="button" variant="outline-warning" onClick={clearForm}>Cancel</Button> : null}
+            <Button type="submit" variant="outline-success">{state.id ? "Edit Event" : "Add Event"}</Button>
+            {state.id ? <Button type="button" variant="outline-warning" onClick={() => dispatch({ type: 'resetForm' })}>Cancel</Button> : null}
             </Form.Group>
         </Form>
     );
