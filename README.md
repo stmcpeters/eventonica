@@ -4,7 +4,7 @@
 Eventonica is an easy-to-use web application allows you to view, add, edit, and delete events for local tech meetups in your area. This project was created for week 9's Techtonica program assignment. The system uses a React frontend and a Node.js backend to create an interactive UI.
 
 ## Demo
-![Eventonica](link to demo pic)
+![Eventonica](demo-pic.png)
 
 ## Features
 - View a list of upcoming tech events
