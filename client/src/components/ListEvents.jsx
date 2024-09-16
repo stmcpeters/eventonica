@@ -15,7 +15,7 @@ const ListEvents = () => {
         // A function to fetch the list of events that will be load anytime that list change
         fetch("http://localhost:8080/api/events")
             .then((response) => response.json())
-            .then((students) => {
+            .then((events) => {
                 setEvents(events);
             });
     }
@@ -62,7 +62,7 @@ const ListEvents = () => {
     return (
         <div className="mybody">
         <div className="list-events">
-            <h2>Local Events Near You</h2>
+            <h2>Local Tech Events Near You</h2>
             <ul>
                 {events.map((event) => {
                     return <li key={event.id}> <Event event={event} toDelete={onDelete} toUpdate={onUpdate} /></li>
