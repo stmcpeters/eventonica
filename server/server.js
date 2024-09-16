@@ -102,5 +102,5 @@ app.put('/api/events/:eventId', async (req, res) =>{
 
 // console.log that your server is up and running
 app.listen(PORT, () => {
-    console.log(`Hola, Server listening on ${PORT}`);
+    console.log(`Hola, Server listening on http://localhost:${PORT}`);
 });
